@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Entities.ElementosOrden>
+<div class="checkout">
+    <div class="container">
+        <h3>Orden</h3>
+        <div class="table-responsive checkout-right animated wow slideInUp" data-wow-delay=".5s">
+            <table class="timetable_sub">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr class="rem1">
+                            <td class="invert"><a href="@Url.Action("Details/"+@item.prodid ,"Producto")">@item.productname</a></td>
+                            <td class="invert">@item.quantity</td>
+                            <td class="invert">@String.Format("${0:#,#.##}", @item.price * item.quantity)</td>
+                            <td class="invert">@item.saledate</td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+
+    </div>
+</div>

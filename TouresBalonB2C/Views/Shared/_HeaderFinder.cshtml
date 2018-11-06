@@ -1,0 +1,62 @@
+﻿<div class="header-bot">
+    <div class="container">
+        <div class="col-md-3 header-left">
+            <h1><a href="~/"><img src="~/Imagenes/logo.png"></a></h1>
+        </div>
+        <div class="col-md-6 header-middle">
+            @using (Html.BeginForm("Buscar", "Producto"))
+            {
+                <div class="search">
+                    <input name="searchString" type="search" value="Buscar" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Buscar';}" required="">
+                </div>
+                <div class="section_room">
+                    <select name="tipoBusqueda" class="frm-field required">
+                        <option value="1">Nombre</option>
+                        <option value="2">Descripción</option>
+                        <option value="3">ID</option>
+                    </select>
+                </div>
+                <div class="search-btn">
+                    <input type="submit" value=" ">
+                </div>
+                <div class="clearfix"></div>
+            }
+        </div>
+        <div class="col-md-3 header-right footer-bottom">
+            <ul>
+                @if (Request.IsAuthenticated)
+                {
+                    if (Session["user"] != null)
+                    {
+                        var user = Session["user"] as Entities.Usuario;
+                        //@Html.ActionLink("Hola " + User.Identity.Name, "Detalles", "Usuario", new { NombreUsuario = User.Identity.Name }, new { @class = "use1" })
+                        //@Html.ActionLink("Hola " + user.fname, "Index", "Account", null, new { @class = "use1" })
+
+                        <a href="@Url.Action("Index", "Account")">
+                            <div class="w3-dropdown-hover">
+                                <button class="w3-button w3-black">Hola @user.fname!</button>
+                                <div class="w3-dropdown-content w3-bar-block w3-border">
+                                    <a href="@Url.Action("Index", "Account")" class="w3-bar-item w3-button">Mi cuenta</a>
+                                    <a href="@Url.Action("Index", "Orden")" class="w3-bar-item w3-button">Mis ordenes</a>
+                                    <a href="@Url.Action("Index", "Account")" class="w3-bar-item w3-button">Mi información</a>
+                                </div>
+                            </div>
+                        </a>
+                        @Html.ActionLink("Salir", "LogOff", "Account")
+                    }
+                }
+                else
+                {
+                    <li>
+                        <a href="@Url.Action("Login", "Account")" class="use1"></a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Register", "Account")" class="use1"></a>
+                    </li>
+                }
+                <li>
+            </ul>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

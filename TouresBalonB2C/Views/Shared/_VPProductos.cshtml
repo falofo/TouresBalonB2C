@@ -1,0 +1,21 @@
+﻿@model IEnumerable<Entities.Producto>
+
+
+@{int i = 0;}
+@foreach (var item in Model)
+{
+    if ((i % 4) == 0)
+    {
+        if ((i % 4) == 0 && i != 0)
+        {
+            @:</div>
+        }
+        @:<div class="resp-tabs-container">
+    }
+    @:<div class="col-md-3 product-men"><div class="men-pro-item simpleCart_shelfItem"><div class="men-thumb-item"><img src="@((item.imageCollection.Count>0)?item.imageCollection[0].url:"")" alt="" class="pro-image-front"><img src="@((item.imageCollection.Count>0)?item.imageCollection[0].url:"")" alt="" class="pro-image-back"><div class="men-cart-pro"><div class="inner-men-cart-pro"><a href="@Url.Action("Details/"+@item.id  ,"Producto")" class="link-product-add-cart">Detalles</a></div>            </div></div>        <div class="item-info-product ">            <h4><a href="@Url.Action("Details/"+@item.id  ,"Producto")">@item.name</a></h4>            <div class="info-product-price">                <span class="item_price">@Html.DisplayFor(model => item.totalPrice, new { @class = "form-control" })</span>            </div>            @Html.ActionLink("Agregar al carrito", "AgregarCarrito", "Carrito", new { id = item.id }, new { @class = "single-item hvr-outline-out button2" })        </div>    </div></div>
+    i++;
+}
+@if (i != 0)
+{
+@:</div>
+}

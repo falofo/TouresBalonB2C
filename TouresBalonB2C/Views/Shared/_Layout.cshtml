@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+
+@{
+    if (ViewBag.title == null)
+    {
+        ViewBag.title = "TouresBalon";
+    }
+    string titulo = Convert.ToString(ViewBag.title);
+}
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - TouresBalon</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/w3.css" rel="stylesheet" type="text/css" />
+    <link href="~/Estilos/style.css" rel="stylesheet" type="text/css" />
+    <link href="~/Estilos/flexslider.css" rel="stylesheet" type="text/css" />
+    <link href="~/Estilos/pignose.layerslider.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/js/jquery-2.1.4.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/js/simpleCart.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.8.0.min.js" type="text/javascript"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/mvc/3.0/jquery.unobtrusive-ajax.js" type="text/javascript"></script>
+
+</head>
+<body>
+    @Html.Partial("_HeaderFinder")
+    @Html.Partial("_HeaderMenu")
+    <div class="container body-content">
+        @RenderBody()
+        @RenderSection("Relacionados", required: false)
+    </div>
+    <hr />
+    @Html.Partial("_FooterMenu")
+</body>
+</html>

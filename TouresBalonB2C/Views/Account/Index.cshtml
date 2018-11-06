@@ -1,0 +1,101 @@
+﻿@model Entities.Update
+<div class="login-grids">
+    <div class="login">
+
+
+        @using (Html.BeginForm("Update", "Account",FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary()
+            var user = Session["user"] as Entities.Usuario;
+            if (user == null)
+            {
+                Response.Redirect("~/Account/LogOff");
+            }
+            bool boolTDC = (user.creditcardnumber!=null && user.creditcardnumber!="") ?true:false;
+            string visTDC = (@boolTDC) ? "visible" : "hidden";
+
+            <div class="login-bottom">
+                <h2>Datos usuario</h2>
+                <div class="col-md-6">
+                    <div class="sign-up">
+                        @Html.LabelFor(m => m.Nombre, htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div>
+                            @Html.TextBoxFor(m => m.Nombre, new { @class = "text-box", @Value = user.fname })
+                        </div>
+                    </div>
+
+                    <div class="sign-up">
+                        @Html.LabelFor(m => m.Apellido, htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div>
+                            @Html.TextBoxFor(m => m.Apellido, new { @class = "text-box", @Value = user.lname })
+                        </div>
+                    </div>
+
+                    <div class="sign-up">
+                        @Html.LabelFor(m => m.Telefono, htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div>
+                            @Html.TextBoxFor(m => m.Telefono, new { @class = "text-box", @Value = user.phonenumber })
+                        </div>
+                    </div>
+
+                    <div class="sign-up">
+                        @Html.LabelFor(m => m.Email, htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div>
+                            @Html.TextBoxFor(m => m.Email, new { @class = "text-box", @Value = user.email })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+
+                    <h4><input id="checkTDC" type='checkbox' onchange='myFunction(this);' checked="@boolTDC"> ¿Añadir Tarjeta de credito?</h4>
+                    <div class="sign-up" id="divTDC" style="visibility:@visTDC">
+                        @Html.LabelFor(m => m.CreditCardNumber, htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div>
+                            @Html.TextBoxFor(m => m.CreditCardNumber, new { @class = "text-box", id = "inputTDC", @Value = user.creditcardnumber })
+                        </div>
+                    </div>
+
+                    <div class="sign-up" id="divTypeTDC" style="visibility:@visTDC">
+                        @Html.LabelFor(m => m.CreditCardType, htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div>
+                            @Html.TextBoxFor(m => m.CreditCardType, new { @class = "text-box", id = "inputTypeTDC", @readonly = "readonly", @Value = user.creditcardtype })
+                        </div>
+                    </div>
+                </div>
+                <input id="myBtn" type="submit" value="Actualizar" />
+
+
+            </div>
+        }
+
+    </div>
+</div>
+<script src="~/Scripts/js/jquery.creditCardValidator.js" type="text/javascript"></script>
+<script>
+
+    $(function () {
+        $('#inputTDC').validateCreditCard(function (result) {
+            $('#inputTypeTDC').val((result.card_type == null ? '-' : result.card_type.name));
+            if (result.valid) {
+                $('#myBtn').prop('disabled', false);
+            } else {
+                $('#myBtn').prop('disabled', true);
+            }
+        });
+    });
+
+    function myFunction() {
+        if ($('#checkTDC').prop('checked')) {
+            $('#myBtn').prop('disabled', true);
+            $('#divTDC').css('visibility', 'visible');
+            $('#divTypeTDC').css('visibility', 'visible');
+            $('#inputTDC').val("");
+        } else {
+            $('#myBtn').prop('disabled', false);
+            $('#divTDC').css('visibility', 'hidden');
+            $('#divTypeTDC').css('visibility', 'hidden');
+        }
+
+    };
+</script>

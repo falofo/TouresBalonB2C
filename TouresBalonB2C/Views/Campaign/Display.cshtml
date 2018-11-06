@@ -1,0 +1,65 @@
+﻿@model Entities.Campaign
+@{ViewBag.title = "Campaign";
+    if (Model !=null) {
+    <div class="col-md-12 products-right">
+        <div class="men-wear-top">
+            <script src="~/Scripts/js/responsiveslides.min.js" type="text/javascript"></script>
+            <script>
+                $(function () {
+                    $("#slider").responsiveSlides({
+                        auto: true,
+                        pager: true,
+                        nav: false,
+                        speed: 500,
+                        namespace: "callbacks",
+                        before: function () {
+                            $('.events').append("<li>before event fired.</li>");
+                        },
+                        after: function () {
+                            $('.events').append("<li>after event fired.</li>");
+                        }
+                    });
+                });
+            </script>
+
+            <div class="clearfix"></div>
+        </div>
+        @using (Html.BeginForm())
+        {
+            <div class="men-wear-bottom">
+                <div class="col-sm-4 men-wear-left">
+                    <div id="top" class="callbacks_container">
+                        <ul class="rslides" id="slider">
+                                <li>
+                                    <img class="img-responsive" src="@Model.image" alt=" " />
+                                </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-8 men-wear-right">
+                    <h4>@Model.name</h4>
+                    <p>
+                        @Model.initialDate
+                    </p>
+                    <p>
+                        @Model.description
+                    </p>
+                    <p>
+                        @Html.LabelFor(m => m.price)
+                        @Html.DisplayFor(model => model.price, new { @class = "form-control" })
+                    </p>
+                    @Html.ActionLink("Agregar al carrito", "AgregarCarrito","Carrito", new { id = @Model.id}, new { @class = "single-item hvr-outline-out button2" })
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        }
+    </div>
+    @section Relacionados
+    {
+        <div>
+            <h3>Los clientes que vieron este artículo también compraron</h3>
+            @Html.Action("_VPProductos", "Producto", new { search = "r" })
+        </div>
+    }
+    }
+}

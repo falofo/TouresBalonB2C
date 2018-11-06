@@ -1,0 +1,70 @@
+﻿<div class="checkout">
+    <div class="container">
+        <h3>Mis Compras</h3>
+        <div class="table-responsive checkout-right animated wow slideInUp" data-wow-delay=".5s">
+            <table class="timetable_sub">
+                <thead>
+                    <tr>
+                        <th>Eliminar</th>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                    </tr>
+                </thead>
+                @{
+                    float total = 0;
+                }
+                @if (Session["carrito"] != null)
+                {
+                    var order = Session["carrito"] as Entities.OrdenCarrito;
+                    foreach (var item in order.elementosOrden)
+                    {
+                        total += @item.price * @item.quantity;
+                        <tr class="rem1">
+                            <td class="invert-closeb">
+                                <div class="rem">
+                                    <a href="@Url.Action("Delete", "Carrito", new { id = @item.prodid })">
+                                        <div class="close1"></div>
+                                    </a>
+                                </div>
+                            </td>
+                            <td class="invert-image"><a href="@Url.Action("Details/"+@item.prodid  ,"Producto")"><img src="@item.image" alt=" " class="img-responsive" /></a></td>
+                            <td class="invert">
+                                <div class="quantity">
+                                    <div class="quantity-select">
+                                        <a href="@Url.Action("restarProducto", "Carrito", new { id = @item.prodid })">
+                                            <div class="entry value-minus">&nbsp;</div>
+                                        </a>
+                                        <div class="entry value"><span>@item.quantity</span></div>
+                                        <a href="@Url.Action("sumarProducto", "Carrito", new { id = @item.prodid })">
+                                            <div class="entry value-plus active">&nbsp;</div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="invert">@item.productname</td>
+                            <td class="invert">@String.Format("${0:#,#.##}", @item.price * @item.quantity)</td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+        <div class="checkout-left">
+            <div class="checkout-right-basket animated wow slideInRight" data-wow-delay=".5s">
+                <a href="@Url.Action("CreateOrder","Orden")"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>Comprar</a>
+            </div>
+            
+            <div class="checkout-right-basket animated wow slideInRight" data-wow-delay=".5s">
+                <a href="@Url.Action("Index","Home")"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>Seguir Comprando</a>
+            </div>
+            <div class="checkout-left-basket animated wow slideInLeft" data-wow-delay=".5s">
+                <h4>Canasta</h4>
+                <ul>
+                    <li>Total <i>-</i> <span>@String.Format("${0:#,#.##}", total)</span></li>
+                </ul>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>

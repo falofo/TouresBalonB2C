@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Entities.Orden>
+<div class="checkout">
+    <div class="container">
+        <h3>Mis Ordenes</h3>
+        <div class="table-responsive checkout-right animated wow slideInUp" data-wow-delay=".5s">
+            <table class="timetable_sub">
+                <thead>
+                    <tr>
+                        <th>Orden</th>
+                        <th>Fecha</th>
+                        <th>Precio</th>
+                        <th>Estatus</th>
+                        <th>Detalles</th>
+                    </tr>
+                </thead>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {                        
+                <tr class="rem1">
+                    <td class="invert">@item.ordid</td>
+                    <td class="invert">@item.orderdate</td>
+                    <td class="invert">@String.Format("${0:#,#.##}", @item.price)</td>
+                    <td class="invert">@item.status</td>
+                    <td>
+                        @using (Html.BeginForm("Details/", "Orden"))
+                        {
+                            <input type="hidden" name="orderId" value="@item.ordid" />
+                            <input type="submit" value="Detalles" />
+                        }
+                    </td>
+                </tr>
+                    }
+                }
+            </table>
+        </div>
+       
+    </div>
+</div>

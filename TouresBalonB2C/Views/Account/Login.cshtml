@@ -1,0 +1,42 @@
+﻿@model Entities.Login
+<div class="login-grids">
+    <div class="login">
+        <div class="login-bottom">
+            <h2>Inicio de sesión</h2>
+            <p>Debe iniciar sesión con las credenciales apropiadas para completar la acción.</p>
+
+            @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+            {
+                @Html.ValidationSummary(true, "Acceso no exitoso. Por favor, corrija los errores y vuelva a intentar.")
+
+
+                <div class="sign-up">
+                    @Html.LabelFor(m => m.email, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div>
+                        @Html.EditorFor(m => m.email)
+                    </div>
+                </div>
+
+                <div class="sign-up">
+                    @Html.LabelFor(m => m.password, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div>
+                        @Html.PasswordFor(m => m.password, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+
+                <div class="single-bottom">
+                    @Html.EditorFor(m => m.rememberMe)
+                    <label for="RememberMe">@Html.LabelFor(m => m.rememberMe)</label>
+                </div>
+
+                <div class="sign-up">
+                    <input type="submit" class="btn btn-primary" value="Acceder" />
+                    <p>
+                        @Html.ActionLink("Regístrese", "Register") si usted no tiene una cuenta.
+                    </p>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
